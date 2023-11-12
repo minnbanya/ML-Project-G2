@@ -1,0 +1,25 @@
+2023-11-12 05:08:52.678 [info] Experiment 'pythonPromptNewFormatterExt' is active
+2023-11-12 05:08:52.679 [info] Experiment 'pythonPromptNewToolsExt' is active
+2023-11-12 05:08:52.679 [info] Experiment 'pythonREPLSmartSend' is active
+2023-11-12 05:08:52.680 [info] Experiment 'pythonTestAdaptercf' is active
+2023-11-12 05:08:52.681 [info] Default formatter is set to null for workspace /root
+2023-11-12 05:08:52.681 [info] Test server listening.
+2023-11-12 05:08:52.699 [warning] Retry failed, storage update failed for key PYTHON_WORKSPACE_STORAGE_KEYS
+2023-11-12 05:08:52.700 [warning] Retry failed, storage update failed for key PYTHON_WORKSPACE_STORAGE_KEYS
+2023-11-12 05:08:52.743 [info] > C:\Users\minnb\AppData\Local\Microsoft\WindowsApps\python3.11.exe -c "import sys;print(sys.executable)"
+2023-11-12 05:08:52.762 [error] [Error: Command failed: C:\Users\minnb\AppData\Local\Microsoft\WindowsApps\python3.11.exe -c "import sys;print(sys.executable)"
+/bin/sh: 1: C:UsersminnbAppDataLocalMicrosoftWindowsAppspython3.11.exe: not found
+
+	at ChildProcess.exithandler (node:child_process:420:12)
+	at ChildProcess.emit (node:events:513:28)
+	at maybeClose (node:internal/child_process:1091:16)
+	at Socket.<anonymous> (node:internal/child_process:449:11)
+	at Socket.emit (node:events:513:28)
+	at Pipe.<anonymous> (node:net:322:12)] {
+  code: 127,
+  killed: false,
+  signal: null,
+  cmd: 'C:\\Users\\minnb\\AppData\\Local\\Microsoft\\WindowsApps\\python3.11.exe -c "import sys;print(sys.executable)"'
+}
+2023-11-12 05:08:54.243 [info] Starting Pylance language server.
+2023-11-12 05:22:32.195 [info] Discover tests for workspace name: root - uri: /root/code/app.py

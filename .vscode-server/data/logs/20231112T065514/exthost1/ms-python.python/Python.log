@@ -1,0 +1,22 @@
+2023-11-12 06:55:21.120 [info] Experiment 'pythonPromptNewFormatterExt' is active
+2023-11-12 06:55:21.120 [info] Experiment 'pythonPromptNewToolsExt' is active
+2023-11-12 06:55:21.121 [info] Experiment 'pythonREPLSmartSend' is active
+2023-11-12 06:55:21.121 [info] Experiment 'pythonTestAdaptercf' is active
+2023-11-12 06:55:21.121 [info] Default formatter is set to null for workspace /root
+2023-11-12 06:55:21.121 [info] Test server listening.
+2023-11-12 06:55:21.550 [info] > C:\Users\minnb\AppData\Local\Microsoft\WindowsApps\python3.11.exe -c "import sys;print(sys.executable)"
+2023-11-12 06:55:21.555 [error] [Error: Command failed: C:\Users\minnb\AppData\Local\Microsoft\WindowsApps\python3.11.exe -c "import sys;print(sys.executable)"
+/bin/sh: 1: C:UsersminnbAppDataLocalMicrosoftWindowsAppspython3.11.exe: not found
+
+	at ChildProcess.exithandler (node:child_process:420:12)
+	at ChildProcess.emit (node:events:513:28)
+	at maybeClose (node:internal/child_process:1091:16)
+	at Socket.<anonymous> (node:internal/child_process:449:11)
+	at Socket.emit (node:events:513:28)
+	at Pipe.<anonymous> (node:net:322:12)] {
+  code: 127,
+  killed: false,
+  signal: null,
+  cmd: 'C:\\Users\\minnb\\AppData\\Local\\Microsoft\\WindowsApps\\python3.11.exe -c "import sys;print(sys.executable)"'
+}
+2023-11-12 06:55:23.688 [info] Starting Pylance language server.

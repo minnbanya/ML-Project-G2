@@ -1,0 +1,33 @@
+2023-11-12 05:04:04.081 [info] 
+
+
+
+
+2023-11-12 05:04:04.082 [info] Extension host agent started.
+2023-11-12 05:04:04.101 [debug] No uninstalled extensions found.
+2023-11-12 05:04:04.103 [info] Started initializing default profile extensions in extensions installation folder. file:///root/.vscode-server/extensions
+2023-11-12 05:04:04.110 [info] [127.0.0.1][b317b985][ManagementConnection] New connection established.
+2023-11-12 05:04:04.114 [debug] ComputeTargetPlatform: linux-x64
+2023-11-12 05:04:04.125 [info] Log level changed to info
+2023-11-12 05:04:04.185 [info] Completed initializing default profile extensions in extensions installation folder. file:///root/.vscode-server/extensions
+2023-11-12 05:04:04.322 [info] [127.0.0.1][d0058294][ExtensionHostConnection] New connection established.
+2023-11-12 05:04:04.365 [info] [127.0.0.1][d0058294][ExtensionHostConnection] <247> Launched Extension Host Process.
+2023-11-12 05:04:12.285 [info] [127.0.0.1][b317b985][ManagementConnection] The client has disconnected gracefully, so the connection will be disposed.
+2023-11-12 05:04:12.314 [info] [127.0.0.1][d0058294][ExtensionHostConnection] <247> Extension Host Process exited with code: 0, signal: null.
+2023-11-12 05:04:16.055 [info] [127.0.0.1][56b17f5c][ManagementConnection] New connection established.
+2023-11-12 05:04:16.475 [info] [127.0.0.1][f5d8e23a][ExtensionHostConnection] New connection established.
+2023-11-12 05:04:16.575 [info] [127.0.0.1][f5d8e23a][ExtensionHostConnection] <645> Launched Extension Host Process.
+2023-11-12 05:06:04.741 [info] Getting Manifest... ms-python.python
+2023-11-12 05:06:04.911 [info] Installing extension: ms-python.python
+2023-11-12 05:06:05.868 [info] Getting Manifest... ms-python.vscode-pylance
+2023-11-12 05:06:06.206 [info] Installing extension: ms-python.vscode-pylance ms-python.python
+2023-11-12 05:06:07.900 [warning] Extension signature verification failed with error 'ENOENT': ms-python.python
+2023-11-12 05:07:11.202 [info] Extracted extension to file:///root/.vscode-server/extensions/ms-python.python-2023.20.0: ms-python.python
+2023-11-12 05:07:11.227 [info] Renamed to /root/.vscode-server/extensions/ms-python.python-2023.20.0
+2023-11-12 05:07:11.247 [info] Extracting extension completed. ms-python.python
+2023-11-12 05:07:12.767 [warning] Extension signature verification failed with error 'ENOENT': ms-python.vscode-pylance
+2023-11-12 05:08:51.488 [info] Extracted extension to file:///root/.vscode-server/extensions/ms-python.vscode-pylance-2023.11.10: ms-python.vscode-pylance
+2023-11-12 05:08:51.513 [info] Renamed to /root/.vscode-server/extensions/ms-python.vscode-pylance-2023.11.10
+2023-11-12 05:08:51.538 [info] Extracting extension completed. ms-python.vscode-pylance
+2023-11-12 05:08:51.580 [info] Extension installed successfully: ms-python.python
+2023-11-12 05:08:51.581 [info] Extension installed successfully: ms-python.vscode-pylance

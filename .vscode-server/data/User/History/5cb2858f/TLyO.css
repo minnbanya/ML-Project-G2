@@ -1,0 +1,6 @@
+.custom-input {
+    max-width: 300px; /* Adjust the maximum width as needed */
+    margin: 0 auto;
+    border: 2px;
+    border-color: black;   /* Center the inputs horizontally */
+}

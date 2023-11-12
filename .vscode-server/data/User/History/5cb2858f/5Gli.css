@@ -1,0 +1,16 @@
+.custom-input {
+    max-width: 300px; /* Adjust the maximum width as needed */
+    margin: 0 auto;   /* Center the inputs horizontally */
+}
+
+.custom-input .form-control {
+    border: 1px solid #000000; /* Add your preferred border color */
+    border-radius: 5px; /* Add border radius for rounded corners, adjust as needed */
+    padding: 5px; /* Add padding to make it visually appealing */
+}
+
+button .btn-custom {
+    background-color: lightgreen; /* Set your desired background color */
+    color: #000000; /* Set the text color for contrast */
+    /* Add any other styles you want */
+}

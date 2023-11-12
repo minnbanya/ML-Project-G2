@@ -1,0 +1,9 @@
+2023-11-12 05:08:54.196 [info] [Info  - 5:08:54 AM] (3955) Pylance language server 2023.11.10 (pyright 088ebaa5) starting
+2023-11-12 05:08:54.219 [info] [Info  - 5:08:54 AM] (3955) Server root directory: /root/.vscode-server/extensions/ms-python.vscode-pylance-2023.11.10/dist
+2023-11-12 05:08:54.220 [info] [Info  - 5:08:54 AM] (3955) Starting service instance "root"
+2023-11-12 05:08:54.295 [info] [Info  - 5:08:54 AM] (3955) Setting environmentName for service "root": "C:\Users\minnb\AppData\Local\Microsoft\WindowsApps\python3.11.exe"
+2023-11-12 05:08:55.380 [info] [Info  - 5:08:55 AM] (3955) Found 1 source file
+2023-11-12 05:09:05.518 [info] [Info  - 5:09:05 AM] (3955) [IDX(2)] Long operation: scan packages /root (9022ms)
+2023-11-12 05:09:10.419 [info] [Info  - 5:09:10 AM] (3955) [IDX(2)] Long operation: indexing: /root/.vscode-server/extensions/ms-python.vscode-pylance-2023.11.10/dist/bundled/stubs/pandas/__init__.pyi (2038ms)
+2023-11-12 05:09:23.800 [info] [Info  - 5:09:23 AM] (3955) [IDX(2)] Long operation: index execution environment /root (17833ms)
+2023-11-12 05:09:24.223 [info] [Info  - 5:09:24 AM] (3955) [IDX(2)] Long operation: index packages /root (18275ms)
