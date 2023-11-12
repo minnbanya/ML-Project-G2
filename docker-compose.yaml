@@ -1,0 +1,13 @@
+version: '1'
+services:
+  app:
+    image: minnbanya/ml2023-project-g5
+    ports:
+      - "8000:8000"
+    build: 
+      context: .
+      dockerfile: .Dockerfile
+    volumes:
+      - ./code:/root/code
+      - ./.vscode-server:/root/.vscode-server
+    command: python3 app.py
