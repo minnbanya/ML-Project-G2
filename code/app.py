@@ -52,6 +52,29 @@ def process_input():
             print(soil_data.get('p2o5', None))
             ph = soil_data.get('ph', None)
 
+        # Makes an API call for soil data
+        crop = "cauliflower"
+        api_url = f"https://krishiprabidhi.net/crop/api/bmp/{crop}"
+        
+        headers = {
+                    "Authorization": f"Bearer {token}",
+                    "Content-Type": "application/json",  # Adjust based on the API requirements
+                }   
+
+        response = requests.get(api_url, headers=headers)
+        print(response.json())
+
+        # Check if the API call is successful
+        if response.status_code == 200:
+            # Parse the JSON response
+            crop_data = response.json()
+
+            # Store values from JSON response
+            # nitrogen = soil_data.get('totalNitrogen', None)
+            # phosphorous = soil_data.get('p2o5', None)
+            # print(soil_data.get('p2o5', None))
+            # ph = soil_data.get('ph', None)
+
             return render_template('result.html', nitrogen=nitrogen, phosphorous=phosphorous, ph=ph)
         else:
             return render_template('error.html')
