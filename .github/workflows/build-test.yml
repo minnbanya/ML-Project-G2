@@ -8,7 +8,7 @@ run-name: ${{ github.actor }} Building and Testing
 on:
   push:
     tags:
-      - 'v*'
+      - 'latest'
 # There can be multiple jobs
 jobs:
   # Job name
@@ -57,7 +57,7 @@ jobs:
           context: .
           file: .Dockerfile
           push: true
-          tags: v1.0
+          tags: ${{ steps.meta.outputs.tags }}
   deploy:
     environment: Production
     needs: build-test
