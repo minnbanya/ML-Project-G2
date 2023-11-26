@@ -63,8 +63,8 @@ def process_input():
         soil_data = response.json()
 
         # Store values from JSON response
-        nitrogen = soil_data.get('totalNitrogen', None)
-        phosphorous = soil_data.get('p2o5', None)
+        nitrogen_percentage = soil_data.get('totalNitrogen', None)
+        phosphorous_kg = soil_data.get('p2o5', None)
         print(soil_data.get('p2o5', None))
         ph = soil_data.get('ph', None)
 
@@ -107,9 +107,26 @@ def process_input():
 
         print(f'API response time: {time.time() - start_time:.0f} seconds')
     
-    print("render should work")
-    return render_template('result.html', nitrogen=nitrogen, phosphorous=phosphorous, ph=ph, 
-                                temperature=temperature, humidity=humidity)
+    # Remove the percentage symbol and convert to float
+    try:
+        nitrogen = float(nitrogen_percentage.replace('%', '')) if nitrogen_percentage else None
+    except ValueError:
+        print("Error: Could not convert nitrogen to float")
+        nitrogen = None
+
+    try:
+        phosphorous = float(phosphorous_kg.replace('kg/ha', '')) if phosphorous_kg else None
+    except ValueError:
+        print("Error: Could not convert phosphorous to float")
+        phosphorous = None
+
+    crop_list = ['apple', 'banana', 'blackgram', 'chickpea', 'coconut', 'coffee',
+       'cotton', 'grapes', 'jute', 'kidneybeans', 'lentil', 'maize',
+       'mango', 'mothbeans', 'mungbean', 'muskmelon', 'orange', 'papaya',
+       'pigeonpeas', 'pomegranate', 'rice', 'watermelon']
+
+    crop_result = crop_list[crop_model.predict([[nitrogen,phosphorous,temperature,humidity,ph]])[0]]
+    return render_template('result.html', crop_result=crop_result)
 
 
 port_number = 8000
