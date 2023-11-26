@@ -14,3 +14,8 @@ button.btn-custom {
     color: #000000; /* Set the text color for contrast */
     /* Add any other styles you want */
 }
+
+
+#map {
+height: 400px;
+}
