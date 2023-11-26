@@ -8,7 +8,7 @@ run-name: ${{ github.actor }} Building and Testing
 on:
   push:
     tags:
-      - 'a*'
+      - 'v*'
 # There can be multiple jobs
 jobs:
   # Job name
