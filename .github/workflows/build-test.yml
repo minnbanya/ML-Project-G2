@@ -57,7 +57,7 @@ jobs:
           context: .
           file: .Dockerfile
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: v1.0
   deploy:
     environment: Production
     needs: build-test

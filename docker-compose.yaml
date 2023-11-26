@@ -1,7 +1,7 @@
 version: '1'
 services:
   app:
-    image: minnbanya/ml2023-project-g5
+    image: minnbanya/ml2023-project-g2
     ports:
       - "8000:8000"
     build: 
