@@ -9,11 +9,22 @@
     </head>
     <body>
         {% include "navbar.html" %}
-        <!-- <h1>Nitrogen : {{ nitrogen }}</h1>
-        <h1>phosphorous : {{ phosphorous|safe }}</h1>
-        <h1>ph : {{ ph }}</h1>
-        <h1>Temperature : {{ temperature }}</h1>
-        <h1>Humidity : {{ humidity }}</h1> -->
-        <h1>Crop : {{ crop_result }}</h1>
+        <h1>Crop Results:</h1>
+        <div class="container text-center" style="margin-left: auto; margin-right: auto;">
+            <div class="row">
+                {% for crop in crop_result %}
+                    <div class="col">
+                        <div class="card">
+                            <img src="..." class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ crop }}</h5>
+                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                <a href="{{ url_for('crop_details', crop_name=crop) }}" class="btn btn-primary">See more!</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
     </body>
 </html>

@@ -68,28 +68,7 @@ def process_input():
         print(soil_data.get('p2o5', None))
         ph = soil_data.get('ph', None)
 
-    # Makes an API call for soil data
-    crop = "cauliflower"
-    api_url = f"https://krishiprabidhi.net/crop/api/bmp/{crop}"
     
-    headers = {
-                "Authorization": f"Bearer {token}",
-                "Content-Type": "application/json",  # Adjust based on the API requirements
-            }   
-
-    response = requests.get(api_url, headers=headers)
-    # print(response.json())
-
-    # Check if the API call is successful
-    if response.status_code == 200:
-        # Parse the JSON response
-        crop_data = response.json()
-
-        # Store values from JSON response
-        # nitrogen = soil_data.get('totalNitrogen', None)
-        # phosphorous = soil_data.get('p2o5', None)
-        # print(soil_data.get('p2o5', None))
-        # ph = soil_data.get('ph', None)
 
     # Makes an API call for weather data
     api_url = f"http://api.weatherstack.com/current?access_key=bca5f2d868c585889eaccfb267a5ce7b&query={latitude},{longitude}"
@@ -121,14 +100,64 @@ def process_input():
         phosphorous = None
 
     crop_list = ['apple', 'banana', 'blackgram', 'chickpea', 'coconut', 'coffee',
-       'cotton', 'grapes', 'jute', 'kidneybeans', 'lentil', 'maize',
-       'mango', 'mothbeans', 'mungbean', 'muskmelon', 'orange', 'papaya',
-       'pigeonpeas', 'pomegranate', 'rice', 'watermelon']
+                'cotton', 'grapes', 'jute', 'kidneybeans', 'lentil', 'maize',
+                'mango', 'mothbeans', 'mungbean', 'muskmelon', 'orange', 'papaya',
+                'pigeonpeas', 'pomegranate', 'rice', 'watermelon']
 
-    crop_result = crop_list[crop_model.predict([[nitrogen,phosphorous,temperature,humidity,ph]])[0]]
+    crop_result = []
+    crop_input = [[nitrogen,phosphorous,temperature,humidity,ph]]
+    crop_prob = crop_model.predict_proba(crop_input)[0]
+    crop_pred = crop_prob.argsort()[::-1][:3]
+    for i in range(len(crop_pred)):
+        crop_result.append(crop_list[crop_pred[i]])
     return render_template('result.html', crop_result=crop_result)
 
+@app.route('/crop_details')
+def crop_details():
+    crop_name = request.args.get('crop_name')
 
+    token_url = "https://krishiprabidhi.net/api/token"
+    headers = {
+        "Content-Type": "application/json",
+    }
+    payload = {
+        "email": "st124145@ait.ac.th",
+        "password": "nopassword99",
+    }
+
+    # Make a POST request to obtain the token
+    response = requests.post(token_url, headers=headers, json=payload)
+    json_response = response.json()
+
+    # Check if the token is present in the JSON response
+    if 'access' not in json_response:
+        error_message = "Failed to obtain access token."
+        return jsonify({'error': error_message}), 500
+
+    token = json_response['access']
+
+    # Makes an API call for crop data
+    api_url = f"https://krishiprabidhi.net/crop/api/bmp/{crop_name}"
+
+    headers = {
+        "Authorization": f"Bearer {token}",
+        "Content-Type": "application/json",
+    }
+
+    # Make a GET request to the crop API
+    response = requests.get(api_url, headers=headers)
+
+    # Check if the API call is successful
+    if response.status_code != 200:
+        error_message = f"Failed to fetch crop data for {crop_name}."
+        return render_template('crop_details_error.html', crop_name=crop_name)
+
+    # Parse the JSON response
+    crop_data = response.json()
+
+    # Rest of your code...
+
+    return render_template('crop_details.html', crop_name=crop_name, crop_data=crop_data)
 port_number = 8000
 
 if __name__ == '__main__':
