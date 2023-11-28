@@ -2,8 +2,6 @@ FROM python:3.11.4-bookworm
 
 RUN pip install --upgrade pip
 
-WORKDIR /root/code
-
 RUN pip install flask
 RUN pip install numpy
 RUN pip install mlflow
