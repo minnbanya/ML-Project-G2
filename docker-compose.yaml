@@ -10,4 +10,4 @@ services:
     volumes:
       - ./code:/root/code
       - ./.vscode-server:/root/.vscode-server
-    command: python3 code/app.py
+    command: bash -c "cd code && python3 app.py"
