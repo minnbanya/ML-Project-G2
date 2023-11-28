@@ -71,9 +71,6 @@ jobs:
           host: ${{ vars.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
-          proxy_host: ${{ vars.PROXY_HOST }}
-          proxy_username: ${{ secrets.USERNAME }}
-          proxy_key: ${{ secrets.KEY }}
           script: |
             tag=${{ github.ref_name }} docker compose -f ml2023_g2/docker-compose.yaml down
             tag=${{ github.ref_name }} docker compose -f ml2023_g2/docker-compose.yaml up -d
