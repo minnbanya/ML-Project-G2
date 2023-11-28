@@ -99,65 +99,61 @@ def process_input():
         print("Error: Could not convert phosphorous to float")
         phosphorous = None
 
-    crop_list = ['apple', 'banana', 'blackgram', 'chickpea', 'coconut', 'coffee',
-                'cotton', 'grapes', 'jute', 'kidneybeans', 'lentil', 'maize',
-                'mango', 'mothbeans', 'mungbean', 'muskmelon', 'orange', 'papaya',
-                'pigeonpeas', 'pomegranate', 'rice', 'watermelon']
+    crop_list = ['Apple', 'Banana', 'Blackgram', 'Chickpea', 'Coconut', 'Coffee',
+                'Cotton', 'Grapes', 'Jute', 'Kidneybeans', 'Lentil', 'Maize',
+                'Mango', 'Mothbeans', 'Mungbean', 'Muskmelon', 'Orange', 'Papaya',
+                'Pigeonpeas', 'Pomegranate', 'Rice', 'Watermelon']
 
     crop_result = []
     crop_input = [[nitrogen,phosphorous,temperature,humidity,ph]]
     crop_prob = crop_model.predict_proba(crop_input)[0]
     crop_pred = crop_prob.argsort()[::-1][:3]
+    crop_suit = sorted(crop_prob, reverse=True)[:3]
+
+    crop_image = []
+
+    #Image API for crop image display
+    api_url = "https://api.unsplash.com//search/photos"
+
+    access_key = "Rh-yjXnAefB0EVCAU48O9Rgh-Z_LyoeE3_rkbmREpVc"
+    
     for i in range(len(crop_pred)):
-        crop_result.append(crop_list[crop_pred[i]])
-    return render_template('result.html', crop_result=crop_result)
-
-@app.route('/crop_details')
-def crop_details():
-    crop_name = request.args.get('crop_name')
-
-    token_url = "https://krishiprabidhi.net/api/token"
-    headers = {
-        "Content-Type": "application/json",
+        crop_name = crop_list[crop_pred[i]]
+        crop_result.append(crop_name)
+        params = {
+        "client_id": access_key,
+        "query": crop_name
     }
-    payload = {
-        "email": "st124145@ait.ac.th",
-        "password": "nopassword99",
-    }
+        response = requests.get(api_url, headers=headers, params=params)
+        if response.status_code == 200:
+        # Parse the JSON response
+            image_data = response.json()
+            results = image_data.get('results', [])
+            if results:
+                # Assuming you want the first result
+                first_result = results[0]
+                image_url = first_result.get('urls', {}).get('regular', None)
+            else:
+                image_url = "https://via.placeholder.com/150x150.png?text=Image+Not+Available"
+            crop_image.append(image_url)
 
-    # Make a POST request to obtain the token
-    response = requests.post(token_url, headers=headers, json=payload)
-    json_response = response.json()
+    # Fertilizer Recommendation
+    fertilizer_list = ['Urea', 'DAP', 'MOP', '10:26:26 NPK', 'SSP', 'Magnesium Sulphate',
+                    '13:32:26 NPK', '12:32:16 NPK', '50:26:26 NPK', '19:19:19 NPK',
+                    'Chilated Micronutrient', '18:46:00 NPK', 'Sulphur',
+                    '20:20:20 NPK', 'Ammonium Sulphate', 'Ferrous Sulphate',
+                    'White Potash', '10:10:10 NPK', 'Hydrated Lime', '14-35-14',
+                    '28-28', '17-17-17', '20-20']
+    fert_input = [[nitrogen,phosphorous,temperature,humidity]]
+    fert_prob = fertilizer_model.predict_proba(fert_input)[0]
+    fert_pred = fert_prob.argsort()[::-1][:3]
+    fert_result = []
+    for i in range(len(fert_pred)):
+        fertilizer = fertilizer_list[fert_pred[i]]
+        fert_result.append(fertilizer)
+    
+    return render_template('result.html', crop_result=crop_result, crop_image=crop_image, crop_suit=crop_suit, fert_result=fert_result)
 
-    # Check if the token is present in the JSON response
-    if 'access' not in json_response:
-        error_message = "Failed to obtain access token."
-        return jsonify({'error': error_message}), 500
-
-    token = json_response['access']
-
-    # Makes an API call for crop data
-    api_url = f"https://krishiprabidhi.net/crop/api/bmp/{crop_name}"
-
-    headers = {
-        "Authorization": f"Bearer {token}",
-        "Content-Type": "application/json",
-    }
-
-    # Make a GET request to the crop API
-    response = requests.get(api_url, headers=headers)
-
-    # Check if the API call is successful
-    if response.status_code != 200:
-        error_message = f"Failed to fetch crop data for {crop_name}."
-        return render_template('crop_details_error.html', crop_name=crop_name)
-
-    # Parse the JSON response
-    crop_data = response.json()
-
-    # Rest of your code...
-
-    return render_template('crop_details.html', crop_name=crop_name, crop_data=crop_data)
 port_number = 8000
 
 if __name__ == '__main__':

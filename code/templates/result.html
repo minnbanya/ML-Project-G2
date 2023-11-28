@@ -9,22 +9,36 @@
     </head>
     <body>
         {% include "navbar.html" %}
-        <h1>Crop Results:</h1>
+        <div class="container text-center" style="margin-top: 20px;">
+            <h1>Recommended Crops</h1>
+        </div>
         <div class="container text-center" style="margin-left: auto; margin-right: auto;">
             <div class="row">
-                {% for crop in crop_result %}
+                {% for i in range(crop_result|length) %}
+                    {% set crop = crop_result[i] %}
+                    {% set image = crop_image[i] %}
+                    {% set suit = crop_suit[i] %}
                     <div class="col">
                         <div class="card">
-                            <img src="..." class="card-img-top" alt="...">
+                            <img src="{{ image }}" class="card-img-top" alt="..." width="200" height="300">
                             <div class="card-body">
                                 <h5 class="card-title">{{ crop }}</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <a href="{{ url_for('crop_details', crop_name=crop) }}" class="btn btn-primary">See more!</a>
+                                <p class="card-text">This crop is {{ (suit * 100)|float|round(2) }}% suitable for your location.</p>
                             </div>
                         </div>
                     </div>
                 {% endfor %}
             </div>
+        </div>
+        <div class="container text-center" style="margin-top: 40px;">
+            <h1>
+                The recommended fertlizers for the soil at your location are:
+            </h1>
+            <ul>
+                {% for fertilizer in fert_result %}
+                <li><h3>{{ fertilizer }}</h3></li>
+                {% endfor %}
+            </ul>
         </div>
     </body>
 </html>
