@@ -26,6 +26,9 @@ stage = "Production"
 modelName = "fertilizer_recommender_wo_crop"
 fert_wo_model = mlflow.sklearn.load_model(model_uri=f"models:/{modelName}/{stage}")
 
+filename1 = 'models/crop_LE.pth'
+crop_le = pickle.load(open(filename1, 'rb'))
+
 app = Flask(__name__, static_url_path='/static')
 
 @app.route('/')
@@ -158,7 +161,7 @@ def process_input():
         crop_result.append(crop_name)
         
         if crop_name in fert_w_list:
-            fert_w_input = [[crop_name, nitrogen,phosphorous,temperature,humidity]]
+            fert_w_input = [[crop_le.transform(crop_name)[0], nitrogen,phosphorous,temperature,humidity]]
             fert_w_prob = fert_w_model.predict_proba(fert_w_input)[0]
             fert_w_pred = fert_w_prob.argsort()[::-1][:3]
             fert_w_result = []
