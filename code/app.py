@@ -167,7 +167,7 @@ def process_input():
         crop_result.append(crop_name)
         
         if crop_name in fert_w_list:
-            fert_w_input = fert_w_scalar([[fert_le.transform(crop_name), nitrogen,phosphorous,temperature,humidity]])
+            fert_w_input = [[crop_name, nitrogen,phosphorous,temperature,humidity]]
             fert_w_prob = fert_w_model.predict_proba(fert_w_input)[0]
             fert_w_pred = fert_w_prob.argsort()[::-1][:3]
             fert_w_result = []
