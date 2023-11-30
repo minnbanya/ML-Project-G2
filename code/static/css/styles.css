@@ -15,8 +15,28 @@ button.btn-custom {
     /* Add any other styles you want */
 }
 
+body {
+    padding-top: 70px; /* Adjust the value based on the height of your navbar */
+}
+
 
 #map {
 height: 400px;
 }
 
+table {
+    border: 2px solid black;
+    background-color: #6e6c6c; /* Gray background color */
+    width: 100%;
+    margin-top: 10px; /* Add some margin for better spacing */
+}
+
+th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: left;
+}
+
+td.parameter {
+    border-right: 2px solid black; /* Add a border to the right of parameter column */
+}

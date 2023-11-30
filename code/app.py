@@ -151,8 +151,17 @@ def process_input():
     for i in range(len(fert_pred)):
         fertilizer = fertilizer_list[fert_pred[i]]
         fert_result.append(fertilizer)
+    if 'coord' in soil_data:
+        del soil_data['coord']
     
-    return render_template('result.html', crop_result=crop_result, crop_image=crop_image, crop_suit=crop_suit, fert_result=fert_result)
+    desired_keys = ['temperature', 'precip', 'humidity']
+    weather_data = weather_data['current']
+    weather_data = {key: value for key, value in weather_data.items() if key in desired_keys}
+    
+    print(soil_data)
+    print(weather_data)
+    return render_template('result.html', crop_result=crop_result, crop_image=crop_image, crop_suit=crop_suit, fert_result=fert_result,
+                           soil_data=soil_data,weather_data=weather_data)
 
 port_number = 8000
 

@@ -31,14 +31,63 @@
             </div>
         </div>
         <div class="container text-center" style="margin-top: 40px;">
-            <h1>
-                The recommended fertlizers for the soil at your location are:
-            </h1>
-            <ul>
-                {% for fertilizer in fert_result %}
-                <li><h3>{{ fertilizer }}</h3></li>
-                {% endfor %}
-            </ul>
+            <h1>The recommended fertilizers for the soil at your location are:</h1>
+                <table class="table mx-auto table-secondary table-dark" style="width: 40%; ">
+                    <thead>
+                        <tr>
+                            <th scope="col">Fertilizer</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for fertilizer in fert_result %}
+                            <tr>
+                                <td class="text-center">{{ fertilizer }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+        </div>        
+        <div class="container text-center" style="margin-top: 40px;">
+            <div class="row">
+                <div class="col">
+                    <h1>Soil Data:</h1>
+                    <table class="table table-secondary table-dark">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="parameter">Parameter</th>
+                                <th scope="col">Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for soil, data in soil_data.items() %}
+                                <tr>
+                                    <td class="parameter text-center">{{ soil }}</td>
+                                    <td class="text-center">{{ data }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col">
+                    <h1>Weather Data:</h1>
+                    <table class="table table-secondary table-dark">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="parameter">Parameter</th>
+                                <th scope="col">Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for weather, data in weather_data.items() %}
+                                <tr>
+                                    <td class="parameter text-center">{{ weather }}</td>
+                                    <td class="text-center">{{ data }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </body>
 </html>
