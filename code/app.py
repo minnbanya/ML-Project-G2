@@ -26,13 +26,6 @@ stage = "Production"
 modelName = "fertilizer_recommender_wo_crop"
 fert_wo_model = mlflow.sklearn.load_model(model_uri=f"models:/{modelName}/{stage}")
 
-
-filename = './scalars/fertilizer_scaler.pth'
-fert_wo_scalar = pickle.load(open(filename, 'rb'))
-
-filename = './scalars/crop_LE.pth'
-fert_le = pickle.load(open(filename, 'rb'))
-
 app = Flask(__name__, static_url_path='/static')
 
 @app.route('/')
@@ -144,7 +137,7 @@ def process_input():
                         '20:20:20 NPK', 'Ammonium Sulphate', 'Ferrous Sulphate',
                         'White Potash', '10:10:10 NPK', 'Hydrated Lime', '14-35-14',
                         '28-28', '17-17-17', '20-20']
-    fert_input = fert_wo_scalar.transform([[nitrogen,phosphorous,temperature,humidity]])
+    fert_input = [[nitrogen,phosphorous,temperature,humidity]]
     fert_prob = fert_wo_model.predict_proba(fert_input)[0]
     fert_pred = fert_prob.argsort()[::-1][:3]
     fert_result = []
