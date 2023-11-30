@@ -18,19 +18,34 @@
                     {% set crop = crop_result[i] %}
                     {% set image = crop_image[i] %}
                     {% set suit = crop_suit[i] %}
+                    {% set fert_list = fertilizers[i] %}
                     <div class="col">
                         <div class="card">
                             <img src="{{ image }}" class="card-img-top" alt="..." width="200" height="300">
                             <div class="card-body">
                                 <h5 class="card-title">{{ crop }}</h5>
                                 <p class="card-text">This crop is {{ (suit * 100)|float|round(2) }}% suitable for your location.</p>
+                                <table class="table mx-auto table-secondary table-dark" style="width: 40%; ">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Recommended Fertilizer</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for fertilizer in fert_list %}
+                                            <tr>
+                                                <td class="text-center">{{ fertilizer }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
                 {% endfor %}
             </div>
         </div>
-        <div class="container text-center" style="margin-top: 40px;">
+        <!-- <div class="container text-center" style="margin-top: 40px;">
             <h1>The recommended fertilizers for the soil at your location are:</h1>
                 <table class="table mx-auto table-secondary table-dark" style="width: 40%; ">
                     <thead>
@@ -46,7 +61,7 @@
                         {% endfor %}
                     </tbody>
                 </table>
-        </div>        
+        </div>         -->
         <div class="container text-center" style="margin-top: 40px;">
             <div class="row">
                 <div class="col">

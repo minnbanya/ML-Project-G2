@@ -2,25 +2,21 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for
 import requests
 import time
-import pickle
 import mlflow
 import mlflow.sklearn
 
 mlflow.set_tracking_uri("http://157.230.38.70:5000")
-    # os.environ["LOGNAME"] = "myo"
-    # mlflow.set_experiment(experiment_name="st123783-myo")
-
-    # Load model from the model registry.
 model_name = "crop_recommender"
 model_version = 1
 stage = "Production"
-
 # load the latest version of a model in that stage.
 crop_model = mlflow.sklearn.load_model(model_uri=f"models:/{model_name}/{stage}")
 
-with open(b"models/fertilizer.model", "rb") as model_file:
-    # Load the model from the file
-    fertilizer_model = pickle.load(model_file)
+model_name = "fertilizer_recommender_w_crop"
+fert_w_model = mlflow.sklearn.load_model(model_uri=f"models:/{model_name}/{stage}")
+
+model_name = "fertilizer_recommender_wo_crop"
+fert_wo_model = mlflow.sklearn.load_model(model_uri=f"models:/{model_name}/{stage}")
 
 app = Flask(__name__, static_url_path='/static')
 
@@ -113,22 +109,58 @@ def process_input():
                 'Mango', 'Mothbeans', 'Mungbean', 'Muskmelon', 'Orange', 'Papaya',
                 'Pigeonpeas', 'Pomegranate', 'Rice', 'Watermelon']
 
-    crop_result = []
+    
     crop_input = [[nitrogen,phosphorous,temperature,humidity,ph]]
     crop_prob = crop_model.predict_proba(crop_input)[0]
     crop_pred = crop_prob.argsort()[::-1][:3]
     crop_suit = sorted(crop_prob, reverse=True)[:3]
 
-    crop_image = []
+    
 
     #Image API for crop image display
     api_url = "https://api.unsplash.com//search/photos"
 
     access_key = "Rh-yjXnAefB0EVCAU48O9Rgh-Z_LyoeE3_rkbmREpVc"
+
+    # Fertilizer Recommendation
+    fertilizer_list = ['Urea', 'DAP', 'MOP', '10:26:26 NPK', 'SSP', 'Magnesium Sulphate',
+                        '13:32:26 NPK', '12:32:16 NPK', '50:26:26 NPK', '19:19:19 NPK',
+                        'Chilated Micronutrient', '18:46:00 NPK', 'Sulphur',
+                        '20:20:20 NPK', 'Ammonium Sulphate', 'Ferrous Sulphate',
+                        'White Potash', '10:10:10 NPK', 'Hydrated Lime', '14-35-14',
+                        '28-28', '17-17-17', '20-20']
+    fert_input = [[nitrogen,phosphorous,temperature,humidity]]
+    fert_prob = fert_wo_model.predict_proba(fert_input)[0]
+    fert_pred = fert_prob.argsort()[::-1][:3]
+    fert_result = []
+    for i in range(len(fert_pred)):
+        fertilizer = fertilizer_list[fert_pred[i]]
+        fert_result.append(fertilizer)
+
+    fert_w_list = ['Sugarcane', 'Jowar', 'Cotton', 'Rice', 'Wheat', 'Groundnut',
+                    'Maize', 'Tur', 'Urad', 'Moong', 'Gram', 'Masoor', 'Soybean',
+                    'Ginger', 'Turmeric', 'Grapes', 'Tobacco', 'Paddy', 'Barley',
+                    'Millets', 'Oil seeds', 'Pulses', 'Ground Nuts']
     
+    crop_result = []
+    crop_image = []
+    fertilizers = []
     for i in range(len(crop_pred)):
         crop_name = crop_list[crop_pred[i]]
         crop_result.append(crop_name)
+        
+        if crop_name in fert_w_list:
+            fert_w_input = [[crop_name, nitrogen,phosphorous,temperature,humidity]]
+            fert_w_prob = fert_wo_model.predict_proba(fert_w_input)[0]
+            fert_w_pred = fert_w_prob.argsort()[::-1][:3]
+            fert_w_result = []
+            for i in range(len(fert_w_pred)):
+                fertilizer = fertilizer_list[fert_w_pred[i]]
+                fert_w_result.append(fertilizer)
+        else:
+            fert_w_result = fert_result
+        fertilizers.append(fert_w_result)
+
         params = {
         "client_id": access_key,
         "query": crop_name
@@ -146,20 +178,6 @@ def process_input():
                 image_url = "https://via.placeholder.com/150x150.png?text=Image+Not+Available"
             crop_image.append(image_url)
 
-    # Fertilizer Recommendation
-    fertilizer_list = ['Urea', 'DAP', 'MOP', '10:26:26 NPK', 'SSP', 'Magnesium Sulphate',
-                    '13:32:26 NPK', '12:32:16 NPK', '50:26:26 NPK', '19:19:19 NPK',
-                    'Chilated Micronutrient', '18:46:00 NPK', 'Sulphur',
-                    '20:20:20 NPK', 'Ammonium Sulphate', 'Ferrous Sulphate',
-                    'White Potash', '10:10:10 NPK', 'Hydrated Lime', '14-35-14',
-                    '28-28', '17-17-17', '20-20']
-    fert_input = [[nitrogen,phosphorous,temperature,humidity]]
-    fert_prob = fertilizer_model.predict_proba(fert_input)[0]
-    fert_pred = fert_prob.argsort()[::-1][:3]
-    fert_result = []
-    for i in range(len(fert_pred)):
-        fertilizer = fertilizer_list[fert_pred[i]]
-        fert_result.append(fertilizer)
     if 'coord' in soil_data:
         del soil_data['coord']
     
@@ -169,7 +187,7 @@ def process_input():
     
     print(soil_data)
     print(weather_data)
-    return render_template('result.html', crop_result=crop_result, crop_image=crop_image, crop_suit=crop_suit, fert_result=fert_result,
+    return render_template('result.html', crop_result=crop_result, crop_image=crop_image, crop_suit=crop_suit, fertilizers = fertilizers,
                            soil_data=soil_data,weather_data=weather_data)
 
 port_number = 8000
