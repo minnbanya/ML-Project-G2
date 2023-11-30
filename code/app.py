@@ -2,21 +2,29 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for
 import requests
 import time
+
 import mlflow
 import mlflow.sklearn
 
+
 mlflow.set_tracking_uri("http://157.230.38.70:5000")
-model_name = "crop_recommender"
-model_version = 1
+modelName = "crop_recommender"
+modelVersion = 1
 stage = "Production"
 # load the latest version of a model in that stage.
-crop_model = mlflow.sklearn.load_model(model_uri=f"models:/{model_name}/{stage}")
+crop_model = mlflow.sklearn.load_model(model_uri=f"models:/{modelName}/{stage}")
 
-model_name = "fertilizer_recommender_w_crop"
-fert_w_model = mlflow.sklearn.load_model(model_uri=f"models:/{model_name}/{stage}")
+mlflow.set_tracking_uri("http://157.230.38.70:5000")
+modelVersion = 1
+stage = "Production"
+modelName = "fertilizer_recommender_w_crop"
+fert_w_model = mlflow.sklearn.load_model(model_uri=f"models:/{modelName}/{stage}")
 
-model_name = "fertilizer_recommender_wo_crop"
-fert_wo_model = mlflow.sklearn.load_model(model_uri=f"models:/{model_name}/{stage}")
+mlflow.set_tracking_uri("http://157.230.38.70:5000")
+modelVersion = 1
+stage = "Production"
+modelName = "fertilizer_recommender_wo_crop"
+fert_wo_model = mlflow.sklearn.load_model(model_uri=f"models:/{modelName}/{stage}")
 
 app = Flask(__name__, static_url_path='/static')
 
@@ -151,7 +159,7 @@ def process_input():
         
         if crop_name in fert_w_list:
             fert_w_input = [[crop_name, nitrogen,phosphorous,temperature,humidity]]
-            fert_w_prob = fert_wo_model.predict_proba(fert_w_input)[0]
+            fert_w_prob = fert_w_model.predict_proba(fert_w_input)[0]
             fert_w_pred = fert_w_prob.argsort()[::-1][:3]
             fert_w_result = []
             for i in range(len(fert_w_pred)):

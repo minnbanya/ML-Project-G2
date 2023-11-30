@@ -12,6 +12,7 @@ RUN pip install matplotlib
 RUN pip install scikit-learn
 RUN pip install ppscore
 RUN pip install pytest
+RUN pip install xgboost
 
 COPY ./code /root/code
 
