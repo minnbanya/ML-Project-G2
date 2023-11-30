@@ -159,7 +159,7 @@ def process_input():
     for i in range(len(crop_pred)):
         crop_name = crop_list[crop_pred[i]]
         crop_result.append(crop_name)
-        crop = crop_le.transform(crop_name)
+        crop = crop_le.transform([crop_name])
         
         if crop_name in fert_w_list:
             fert_w_input = [[crop[0], nitrogen,phosphorous,temperature,humidity]]
