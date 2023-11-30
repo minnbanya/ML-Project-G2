@@ -26,8 +26,6 @@ stage = "Production"
 modelName = "fertilizer_recommender_wo_crop"
 fert_wo_model = mlflow.sklearn.load_model(model_uri=f"models:/{modelName}/{stage}")
 
-filename = './scalars/fertilizer_crop_scaler.pth'
-fert_w_scalar = pickle.load(open(filename, 'rb'))
 
 filename = './scalars/fertilizer_scaler.pth'
 fert_wo_scalar = pickle.load(open(filename, 'rb'))
