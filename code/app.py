@@ -3,11 +3,20 @@ from flask import Flask, render_template, request, jsonify, redirect, url_for
 import requests
 import time
 import pickle
+import mlflow
+import mlflow.sklearn
 
-# Open the file in binary mode for reading
-with open(b"models/crop.model", "rb") as model_file:
-    # Load the model from the file
-    crop_model = pickle.load(model_file)
+mlflow.set_tracking_uri("http://157.230.38.70:5000")
+    # os.environ["LOGNAME"] = "myo"
+    # mlflow.set_experiment(experiment_name="st123783-myo")
+
+    # Load model from the model registry.
+model_name = "crop_recommender"
+model_version = 1
+stage = "Production"
+
+# load the latest version of a model in that stage.
+crop_model = mlflow.sklearn.load_model(model_uri=f"models:/{model_name}/{stage}")
 
 with open(b"models/fertilizer.model", "rb") as model_file:
     # Load the model from the file

@@ -73,5 +73,6 @@ jobs:
           key: ${{ secrets.KEY }}
           script: |
             tag=${{ github.ref_name }} docker compose -f ml2023_g2/docker-compose.yaml down
+            tag=${{ github.ref_name }} docker compose -f ml2023_g2/docker-compose.yaml pull
             tag=${{ github.ref_name }} docker compose -f ml2023_g2/docker-compose.yaml up -d
   
