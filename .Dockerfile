@@ -4,6 +4,7 @@ RUN pip install --upgrade pip
 
 WORKDIR /root/code
 
+RUN pip install xgboost
 RUN pip install flask
 RUN pip install numpy
 RUN pip install mlflow
@@ -12,8 +13,6 @@ RUN pip install matplotlib
 RUN pip install scikit-learn
 RUN pip install ppscore
 RUN pip install pytest
-RUN pip install xgboost
-RUN pip install pydantic
 
 COPY ./code /root/code
 
